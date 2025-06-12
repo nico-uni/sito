@@ -6,7 +6,6 @@
   <title>Miniature Fantasy Shop</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Tema fantasy: sfondo pergamena e colori magici */
     body {
       background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
       background-color: #f4efe3;
@@ -14,14 +13,12 @@
       color: #3b2f2f;
     }
 
-    /* Immagini miniature */
     .card img {
       height: 200px;
       object-fit: cover;
       border: 2px solid #8b5c2c;
     }
 
-    /* Navbar fantasy */
     .navbar {
       background-image: linear-gradient(to right, #4b2e83, #6f42c1);
       border-bottom: 3px solid #c6a664;
@@ -37,7 +34,6 @@
       margin-right: 10px;
     }
 
-    /* Footer */
     footer {
       background-color: #4b2e83;
       color: #fdf6e3;
@@ -46,7 +42,6 @@
       font-style: italic;
     }
 
-    /* Ombra alle card */
     .card {
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       transition: transform 0.3s, box-shadow 0.3s;
@@ -59,14 +54,12 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.3);
     }
 
-    /* Bordo titolo sezione */
     h2 {
       border-top: 4px double #8b5c2c;
       padding-top: 10px;
       text-shadow: 1px 1px #f4f1eb;
     }
 
-    /* Pulsanti personalizzati */
     .btn-primary {
       background-color: #6f42c1;
       border: none;
@@ -93,6 +86,10 @@
     .btn-success:hover {
       background-color: #276749;
     }
+
+    .alert {
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -112,6 +109,16 @@
 
   <div class="container mt-5" id="products">
     <h2 class="text-center mb-4">Miniature in Vendita</h2>
+    <div class="d-flex justify-content-end mb-3">
+      <label for="sortSelect" class="me-2 align-self-center">Ordina per:</label>
+      <select class="form-select w-auto" id="sortSelect">
+        <option value="default">Predefinito</option>
+        <option value="priceAsc">Prezzo crescente</option>
+        <option value="priceDesc">Prezzo decrescente</option>
+        <option value="nameAsc">Nome A-Z</option>
+        <option value="nameDesc">Nome Z-A</option>
+      </select>
+    </div>
     <div class="row row-cols-1 row-cols-md-3 g-4" id="miniature-cards"></div>
   </div>
 
@@ -123,7 +130,7 @@
 
   <div class="container mt-4" id="checkout">
     <h2>Checkout</h2>
-    <form>
+    <form id="checkout-form">
       <div class="mb-3">
         <label class="form-label">Nome</label>
         <input type="text" class="form-control" required>
@@ -144,98 +151,85 @@
       </div>
       <button type="submit" class="btn btn-success">Completa Ordine</button>
     </form>
+    <div id="checkout-message"></div>
   </div>
 
   <footer class="mt-5">Miniature Fantasy © 2025 - Tutti i diritti riservati</footer>
-
-  <!-- Modal di Dettaglio per le Miniature -->
   <div id="modals-container"></div>
 
   <script>
     const cart = [];
 
     const products = [
-      {
-        name: "Cleric Valorosa",
-        price: 13,
-        img: "https://titan-forge.com/clerics/516-human-female-cleric.jpg",
-        description: "Paladina devota alla dea della guarigione, brandisce un martello di luce sacra e scudo incantato. Ideale per ruoli da supporto e combattente resistente."
-      },
-      {
-        name: "Druido del Bosco",
-        price: 14,
-        img: "https://titan-forge.com/druids/642-human-male-druid.jpg",
-        description: "Misterioso guardiano della foresta, controlla le forze naturali. Può evocare creature selvatiche, curare, e manipolare il terreno."
-      },
-      {
-        name: "Strega delle Ombre",
-        price: 12,
-        img: "https://brother-vinni.com/cdn/shop/files/witch-miniature-fantasy-miniature-for-dnd-d-d-and-other-tabletop-rpg.jpg",
-        description: "Incantatrice sinistra proveniente dalle Terre Oscure, esperta in illusioni, maledizioni e necromanzia leggera."
-      },
-      {
-        name: "Nano del Martello",
-        price: 11,
-        img: "https://titan-forge.com/dwarves/1017-dwarf-hammer-warrior.jpg",
-        description: "Guerriero corazzato con lunga barba intrecciata, usa un martello da guerra runico. Ottimo per assalti frontali e difesa."
-      },
-      {
-        name: "Arciere Elfico",
-        price: 10,
-        img: "https://cdn.pixabay.com/photo/2020/04/28/12/46/elf-5101802_960_720.jpg",
-        description: "Agile cecchino dei boschi, maestro dell'arco elfico. Ottimo per attacchi furtivi, imboscate e supporto a distanza."
-      },
-      {
-        name: "Cavaliere del Sole",
-        price: 15,
-        img: "https://cdn.pixabay.com/photo/2020/04/29/17/59/knight-5110976_960_720.jpg",
-        description: "Nobile guerriero con armatura splendente, emana aura sacra. Incanta gli alleati e abbatte il male con spada solare."
-      }
+      { name: "Cleric Valorosa", price: 13, img: "https://titan-forge.com/clerics/516-human-female-cleric.jpg", description: "Paladina devota alla dea della guarigione, brandisce un martello di luce sacra e scudo incantato. Ideale per ruoli da supporto e combattente resistente." },
+      { name: "Druido del Bosco", price: 14, img: "https://titan-forge.com/druids/642-human-male-druid.jpg", description: "Misterioso guardiano della foresta, controlla le forze naturali. Può evocare creature selvatiche, curare, e manipolare il terreno." },
+      { name: "Strega delle Ombre", price: 12, img: "https://brother-vinni.com/cdn/shop/files/witch-miniature-fantasy-miniature-for-dnd-d-d-and-other-tabletop-rpg.jpg", description: "Incantatrice sinistra proveniente dalle Terre Oscure, esperta in illusioni, maledizioni e necromanzia leggera." },
+      { name: "Nano del Martello", price: 11, img: "https://titan-forge.com/dwarves/1017-dwarf-hammer-warrior.jpg", description: "Guerriero corazzato con lunga barba intrecciata, usa un martello da guerra runico. Ottimo per assalti frontali e difesa." },
+      { name: "Arciere Elfico", price: 10, img: "https://cdn.pixabay.com/photo/2020/04/28/12/46/elf-5101802_960_720.jpg", description: "Agile cecchino dei boschi, maestro dell'arco elfico. Ottimo per attacchi furtivi, imboscate e supporto a distanza." },
+      { name: "Cavaliere del Sole", price: 15, img: "https://cdn.pixabay.com/photo/2020/04/29/17/59/knight-5110976_960_720.jpg", description: "Nobile guerriero con armatura splendente, emana aura sacra. Incanta gli alleati e abbatte il male con spada solare." }
     ];
 
     const container = document.getElementById("miniature-cards");
     const modalContainer = document.getElementById("modals-container");
 
-    products.forEach((product, index) => {
-      const col = document.createElement("div");
-      col.className = "col";
-      col.innerHTML = `
-        <div class="card h-100">
-          <img src="${product.img}" class="card-img-top" alt="${product.name}">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">${product.name}</h5>
-            <p class="card-text">${product.description.substring(0, 60)}...</p>
-            <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#modal${index}">Scopri di più</button>
-          </div>
-        </div>
-      `;
-      container.appendChild(col);
+    document.getElementById("sortSelect").addEventListener("change", function () {
+      const sortType = this.value;
+      let sortedProducts = [...products];
 
-      const modal = document.createElement("div");
-      modal.className = "modal fade";
-      modal.id = `modal${index}`;
-      modal.tabIndex = -1;
-      modal.innerHTML = `
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header bg-warning">
-              <h5 class="modal-title">${product.name}</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
-            </div>
-            <div class="modal-body">
-              <img src="${product.img}" class="img-fluid mb-3" alt="${product.name}">
-              <p>${product.description}</p>
-              <p><strong>Prezzo: €${product.price.toFixed(2)}</strong></p>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-              <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, 'modal${index}')">Aggiungi al Carrello</button>
+      switch (sortType) {
+        case "priceAsc": sortedProducts.sort((a, b) => a.price - b.price); break;
+        case "priceDesc": sortedProducts.sort((a, b) => b.price - a.price); break;
+        case "nameAsc": sortedProducts.sort((a, b) => a.name.localeCompare(b.name)); break;
+        case "nameDesc": sortedProducts.sort((a, b) => b.name.localeCompare(a.name)); break;
+      }
+
+      renderProducts(sortedProducts);
+    });
+
+    function renderProducts(productList) {
+      container.innerHTML = '';
+      modalContainer.innerHTML = '';
+      productList.forEach((product, index) => {
+        const col = document.createElement("div");
+        col.className = "col";
+        col.innerHTML = `
+          <div class="card h-100">
+            <img src="${product.img}" class="card-img-top" alt="${product.name}">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">${product.name}</h5>
+              <p class="card-text">${product.description.substring(0, 60)}...</p>
+              <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#modal${index}">Scopri di più</button>
             </div>
           </div>
-        </div>
-      `;
-      modalContainer.appendChild(modal);
-    });
+        `;
+        container.appendChild(col);
+
+        const modal = document.createElement("div");
+        modal.className = "modal fade";
+        modal.id = `modal${index}`;
+        modal.tabIndex = -1;
+        modal.innerHTML = `
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header bg-warning">
+                <h5 class="modal-title">${product.name}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+              </div>
+              <div class="modal-body">
+                <img src="${product.img}" class="img-fluid mb-3" alt="${product.name}">
+                <p>${product.description}</p>
+                <p><strong>Prezzo: €${product.price.toFixed(2)}</strong></p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, 'modal${index}')">Aggiungi al Carrello</button>
+              </div>
+            </div>
+          </div>
+        `;
+        modalContainer.appendChild(modal);
+      });
+    }
 
     function addToCart(name, price, modalId) {
       cart.push({ name, price });
@@ -262,8 +256,18 @@
       cart.splice(index, 1);
       updateCart();
     }
+
+    document.getElementById("checkout-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const message = document.getElementById("checkout-message");
+      message.innerHTML = '<div class="alert alert-success">Grazie per il tuo ordine! Riceverai una conferma a breve.</div>';
+      this.reset();
+      cart.length = 0;
+      updateCart();
+    });
+
+    renderProducts(products);
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
