@@ -112,10 +112,7 @@
 
   <div class="container mt-5" id="products">
     <h2 class="text-center mb-4">Miniature in Vendita</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <!-- MINIATURE CARDS CON MODALI -->
-      <div class="col" id="miniature-cards"></div>
-    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="miniature-cards"></div>
   </div>
 
   <div class="container mt-5" id="cart">
@@ -139,6 +136,12 @@
         <label class="form-label">Carta di Credito</label>
         <input type="text" class="form-control" required>
       </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="accettaTermini" required>
+        <label class="form-check-label" for="accettaTermini">
+          Accetto i <a href="#">termini e condizioni</a>
+        </label>
+      </div>
       <button type="submit" class="btn btn-success">Completa Ordine</button>
     </form>
   </div>
@@ -156,37 +159,37 @@
         name: "Cleric Valorosa",
         price: 13,
         img: "https://titan-forge.com/clerics/516-human-female-cleric.jpg",
-        description: "Paladina sacra con martello di luce, capace di curare e combattere le forze oscure."
+        description: "Paladina devota alla dea della guarigione, brandisce un martello di luce sacra e scudo incantato. Ideale per ruoli da supporto e combattente resistente."
       },
       {
         name: "Druido del Bosco",
         price: 14,
         img: "https://titan-forge.com/druids/642-human-male-druid.jpg",
-        description: "Mago della natura, può trasformarsi in animali e parlare con gli spiriti."
+        description: "Misterioso guardiano della foresta, controlla le forze naturali. Può evocare creature selvatiche, curare, e manipolare il terreno."
       },
       {
         name: "Strega delle Ombre",
         price: 12,
         img: "https://brother-vinni.com/cdn/shop/files/witch-miniature-fantasy-miniature-for-dnd-d-d-and-other-tabletop-rpg.jpg",
-        description: "Incantatrice oscura, usa magie illusionistiche e maledizioni."
+        description: "Incantatrice sinistra proveniente dalle Terre Oscure, esperta in illusioni, maledizioni e necromanzia leggera."
       },
       {
         name: "Nano del Martello",
         price: 11,
         img: "https://titan-forge.com/dwarves/1017-dwarf-hammer-warrior.jpg",
-        description: "Guerriero robusto, esperto in armi pesanti e difese in mischia."
+        description: "Guerriero corazzato con lunga barba intrecciata, usa un martello da guerra runico. Ottimo per assalti frontali e difesa."
       },
       {
         name: "Arciere Elfico",
         price: 10,
         img: "https://cdn.pixabay.com/photo/2020/04/28/12/46/elf-5101802_960_720.jpg",
-        description: "Agile e letale, colpisce i bersagli da lontano con precisione."
+        description: "Agile cecchino dei boschi, maestro dell'arco elfico. Ottimo per attacchi furtivi, imboscate e supporto a distanza."
       },
       {
         name: "Cavaliere del Sole",
         price: 15,
         img: "https://cdn.pixabay.com/photo/2020/04/29/17/59/knight-5110976_960_720.jpg",
-        description: "Difensore della luce, incarna la giustizia e la nobiltà."
+        description: "Nobile guerriero con armatura splendente, emana aura sacra. Incanta gli alleati e abbatte il male con spada solare."
       }
     ];
 
@@ -195,19 +198,18 @@
 
     products.forEach((product, index) => {
       const col = document.createElement("div");
-      col.className = "card h-100";
+      col.className = "col";
       col.innerHTML = `
-        <img src="${product.img}" class="card-img-top" alt="${product.name}">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">${product.name}</h5>
-          <p class="card-text">${product.description.substring(0, 60)}...</p>
-          <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#modal${index}">Scopri di più</button>
+        <div class="card h-100">
+          <img src="${product.img}" class="card-img-top" alt="${product.name}">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">${product.name}</h5>
+            <p class="card-text">${product.description.substring(0, 60)}...</p>
+            <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#modal${index}">Scopri di più</button>
+          </div>
         </div>
       `;
-      const outer = document.createElement("div");
-      outer.className = "col";
-      outer.appendChild(col);
-      container.appendChild(outer);
+      container.appendChild(col);
 
       const modal = document.createElement("div");
       modal.className = "modal fade";
@@ -227,7 +229,7 @@
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-              <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price})">Aggiungi al Carrello</button>
+              <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, 'modal${index}')">Aggiungi al Carrello</button>
             </div>
           </div>
         </div>
@@ -235,9 +237,11 @@
       modalContainer.appendChild(modal);
     });
 
-    function addToCart(name, price) {
+    function addToCart(name, price, modalId) {
       cart.push({ name, price });
       updateCart();
+      const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+      if (modal) modal.hide();
     }
 
     function updateCart() {
@@ -262,4 +266,3 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
