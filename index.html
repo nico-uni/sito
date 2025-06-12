@@ -1,255 +1,169 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Miniature Fantasy Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body {
-      background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
-      background-color: #f4efe3;
-      font-family: 'Garamond', serif;
-      color: #3b2f2f;
+      background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+      color: #f0e6d2;
+      font-family: 'Georgia', serif;
     }
-
-    .card img {
-      height: 200px;
-      object-fit: cover;
-      border: 2px solid #8b5c2c;
+    header, footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(44, 62, 80, 0.85);
+      box-shadow: 0 0 10px #222;
     }
-
-    .navbar {
-      background-image: linear-gradient(to right, #4b2e83, #6f42c1);
-      border-bottom: 3px solid #c6a664;
+    h2, h4 {
+      margin-top: 1rem;
+      color: #f9d71c;
+      text-shadow: 1px 1px 4px #000;
     }
-
-    .navbar-brand, .nav-link, .nav-link:focus, .nav-link:hover {
-      color: #fff3d1;
+    table {
+      background-color: rgba(44, 62, 80, 0.75);
+      color: #f0e6d2;
+    }
+    .btn-warning {
+      background-color: #f9d71c;
+      border-color: #d4af37;
+      color: #2c3e50;
       font-weight: bold;
     }
-
-    .navbar-logo {
-      height: 40px;
-      margin-right: 10px;
+    .btn-warning:hover {
+      background-color: #d4af37;
+      color: #f0e6d2;
     }
-
-    footer {
-      background-color: #4b2e83;
-      color: #fdf6e3;
-      padding: 1rem;
-      text-align: center;
-      font-style: italic;
-    }
-
-    .card {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: transform 0.3s, box-shadow 0.3s;
-      background-color: #fffaf0;
-      border: 2px solid #c6a664;
-    }
-
-    .card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-    }
-
-    h2 {
-      border-top: 4px double #8b5c2c;
-      padding-top: 10px;
-      text-shadow: 1px 1px #f4f1eb;
-    }
-
-    .btn-primary {
-      background-color: #6f42c1;
-      border: none;
-    }
-
-    .btn-primary:hover {
-      background-color: #563d7c;
-    }
-
     .btn-danger {
-      background-color: #b03a2e;
-      border: none;
+      background-color: #a83232;
+      border-color: #7a2525;
     }
-
     .btn-danger:hover {
-      background-color: #922b21;
+      background-color: #7a2525;
     }
-
     .btn-success {
-      background-color: #2e8b57;
-      border: none;
+      background-color: #3a6b35;
+      border-color: #2d4d27;
     }
-
     .btn-success:hover {
-      background-color: #276749;
-    }
-
-    .alert {
-      margin-top: 1rem;
+      background-color: #2d4d27;
     }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg">
-    <div class="container d-flex align-items-center">
-      <img src="https://cdn.pixabay.com/photo/2014/04/02/14/10/shield-307214_960_720.png" alt="Logo Fantasy" class="navbar-logo">
-      <a class="navbar-brand" href="#">Miniature Fantasy</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#products">Miniature</a></li>
-          <li class="nav-item"><a class="nav-link" href="#cart">Carrello</a></li>
-          <li class="nav-item"><a class="nav-link" href="#checkout">Checkout</a></li>
-        </ul>
+  <header>
+    <h1>Miniature Fantasy Shop</h1>
+    <!-- Qui potresti aggiungere un logo fantasy -->
+  </header>
+
+  <main class="container mt-5">
+    <!-- Qui puoi mettere la sezione delle miniature e la loro visualizzazione -->
+    <!-- (La sezione prodotti non mostrata qui, ma immagina sia sopra il carrello) -->
+
+    <div id="cart">
+      <h2>Carrello</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Prezzo (€)</th>
+            <th>Quantità</th>
+            <th>Totale</th>
+            <th>Azione</th>
+          </tr>
+        </thead>
+        <tbody id="cart-items"></tbody>
+      </table>
+      <h4>Totale carrello: €<span id="cart-total">0</span></h4>
+      <button class="btn btn-warning" onclick="clearCart()">Svuota Carrello</button>
+      <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#checkoutModal" onclick="showCheckout()">Vai al Checkout</button>
+    </div>
+  </main>
+
+  <footer class="mt-5">
+    Miniature Fantasy © 2025 - Tutti i diritti riservati
+  </footer>
+
+  <!-- Modal Checkout -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background: #2c3e50; color: #f0e6d2;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="checkout-form">
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="nome" required />
+            </div>
+            <div class="mb-3">
+              <label for="indirizzo" class="form-label">Indirizzo</label>
+              <input type="text" class="form-control" id="indirizzo" required />
+            </div>
+            <div class="mb-3">
+              <label for="carta" class="form-label">Carta di Credito</label>
+              <input type="text" class="form-control" id="carta" required />
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="accettaTermini" required />
+              <label class="form-check-label" for="accettaTermini">
+                Accetto i <a href="#" style="color:#f9d71c;">termini e condizioni</a>
+              </label>
+            </div>
+            <p class="fw-bold">Totale da pagare: €<span id="checkout-total">0</span></p>
+            <button type="submit" class="btn btn-success">Completa Ordine</button>
+          </form>
+          <div id="checkout-message" class="mt-3"></div>
+        </div>
       </div>
     </div>
-  </nav>
-
-  <div class="container mt-5" id="products">
-    <h2 class="text-center mb-4">Miniature in Vendita</h2>
-    <div class="d-flex justify-content-end mb-3">
-      <label for="sortSelect" class="me-2 align-self-center">Ordina per:</label>
-      <select class="form-select w-auto" id="sortSelect">
-        <option value="default">Predefinito</option>
-        <option value="priceAsc">Prezzo crescente</option>
-        <option value="priceDesc">Prezzo decrescente</option>
-        <option value="nameAsc">Nome A-Z</option>
-        <option value="nameDesc">Nome Z-A</option>
-      </select>
-    </div>
-    <div class="row row-cols-1 row-cols-md-3 g-4" id="miniature-cards"></div>
   </div>
-
-  <div class="container mt-5" id="cart">
-    <h2>Carrello</h2>
-    <ul class="list-group mb-3" id="cart-items"></ul>
-    <h4>Totale: €<span id="cart-total">0</span></h4>
-  </div>
-
-  <div class="container mt-4" id="checkout">
-    <h2>Checkout</h2>
-    <form id="checkout-form">
-      <div class="mb-3">
-        <label class="form-label">Nome</label>
-        <input type="text" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Indirizzo</label>
-        <input type="text" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Carta di Credito</label>
-        <input type="text" class="form-control" required>
-      </div>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" id="accettaTermini" required>
-        <label class="form-check-label" for="accettaTermini">
-          Accetto i <a href="#">termini e condizioni</a>
-        </label>
-      </div>
-      <button type="submit" class="btn btn-success">Completa Ordine</button>
-    </form>
-    <div id="checkout-message"></div>
-  </div>
-
-  <footer class="mt-5">Miniature Fantasy © 2025 - Tutti i diritti riservati</footer>
-  <div id="modals-container"></div>
 
   <script>
-    const cart = [];
+    let cart = [];
 
-    const products = [
-      { name: "Cleric Valorosa", price: 13, img: "https://titan-forge.com/clerics/516-human-female-cleric.jpg", description: "Paladina devota alla dea della guarigione, brandisce un martello di luce sacra e scudo incantato. Ideale per ruoli da supporto e combattente resistente." },
-      { name: "Druido del Bosco", price: 14, img: "https://titan-forge.com/druids/642-human-male-druid.jpg", description: "Misterioso guardiano della foresta, controlla le forze naturali. Può evocare creature selvatiche, curare, e manipolare il terreno." },
-      { name: "Strega delle Ombre", price: 12, img: "https://brother-vinni.com/cdn/shop/files/witch-miniature-fantasy-miniature-for-dnd-d-d-and-other-tabletop-rpg.jpg", description: "Incantatrice sinistra proveniente dalle Terre Oscure, esperta in illusioni, maledizioni e necromanzia leggera." },
-      { name: "Nano del Martello", price: 11, img: "https://titan-forge.com/dwarves/1017-dwarf-hammer-warrior.jpg", description: "Guerriero corazzato con lunga barba intrecciata, usa un martello da guerra runico. Ottimo per assalti frontali e difesa." },
-      { name: "Arciere Elfico", price: 10, img: "https://cdn.pixabay.com/photo/2020/04/28/12/46/elf-5101802_960_720.jpg", description: "Agile cecchino dei boschi, maestro dell'arco elfico. Ottimo per attacchi furtivi, imboscate e supporto a distanza." },
-      { name: "Cavaliere del Sole", price: 15, img: "https://cdn.pixabay.com/photo/2020/04/29/17/59/knight-5110976_960_720.jpg", description: "Nobile guerriero con armatura splendente, emana aura sacra. Incanta gli alleati e abbatte il male con spada solare." }
-    ];
-
-    const container = document.getElementById("miniature-cards");
-    const modalContainer = document.getElementById("modals-container");
-
-    document.getElementById("sortSelect").addEventListener("change", function () {
-      const sortType = this.value;
-      let sortedProducts = [...products];
-
-      switch (sortType) {
-        case "priceAsc": sortedProducts.sort((a, b) => a.price - b.price); break;
-        case "priceDesc": sortedProducts.sort((a, b) => b.price - a.price); break;
-        case "nameAsc": sortedProducts.sort((a, b) => a.name.localeCompare(b.name)); break;
-        case "nameDesc": sortedProducts.sort((a, b) => b.name.localeCompare(a.name)); break;
-      }
-
-      renderProducts(sortedProducts);
-    });
-
-    function renderProducts(productList) {
-      container.innerHTML = '';
-      modalContainer.innerHTML = '';
-      productList.forEach((product, index) => {
-        const col = document.createElement("div");
-        col.className = "col";
-        col.innerHTML = `
-          <div class="card h-100">
-            <img src="${product.img}" class="card-img-top" alt="${product.name}">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">${product.name}</h5>
-              <p class="card-text">${product.description.substring(0, 60)}...</p>
-              <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#modal${index}">Scopri di più</button>
-            </div>
-          </div>
-        `;
-        container.appendChild(col);
-
-        const modal = document.createElement("div");
-        modal.className = "modal fade";
-        modal.id = `modal${index}`;
-        modal.tabIndex = -1;
-        modal.innerHTML = `
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header bg-warning">
-                <h5 class="modal-title">${product.name}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
-              </div>
-              <div class="modal-body">
-                <img src="${product.img}" class="img-fluid mb-3" alt="${product.name}">
-                <p>${product.description}</p>
-                <p><strong>Prezzo: €${product.price.toFixed(2)}</strong></p>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, 'modal${index}')">Aggiungi al Carrello</button>
-              </div>
-            </div>
-          </div>
-        `;
-        modalContainer.appendChild(modal);
-      });
-    }
-
-    function addToCart(name, price, modalId) {
-      cart.push({ name, price });
-      updateCart();
-      const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
-      if (modal) modal.hide();
-    }
+    // Esempio di aggiunta articoli per test
+    // Puoi rimuovere o modificare
+    cart.push({ name: "Miniatura Guerriero", price: 14.99, quantity: 1 });
+    cart.push({ name: "Miniatura Mago", price: 19.99, quantity: 2 });
+    updateCart();
 
     function updateCart() {
-      const cartItems = document.getElementById('cart-items');
-      cartItems.innerHTML = '';
+      const cartItems = document.getElementById("cart-items");
+      cartItems.innerHTML = "";
       let total = 0;
+
       cart.forEach((item, index) => {
-        total += item.price;
-        const li = document.createElement('li');
-        li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-        li.innerHTML = `${item.name} - €${item.price} <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Rimuovi</button>`;
-        cartItems.appendChild(li);
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>€${item.price.toFixed(2)}</td>
+          <td>
+            <input
+              type="number"
+              min="1"
+              value="${item.quantity}"
+              onchange="updateQuantity(${index}, this.value)"
+              class="form-control form-control-sm"
+              style="width: 70px;"
+            />
+          </td>
+          <td>€${subtotal.toFixed(2)}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Rimuovi</button>
+          </td>
+        `;
+        cartItems.appendChild(row);
       });
-      document.getElementById('cart-total').textContent = total.toFixed(2);
+      document.getElementById("cart-total").textContent = total.toFixed(2);
+      document.getElementById("checkout-total").textContent = total.toFixed(2);
     }
 
     function removeFromCart(index) {
@@ -257,17 +171,42 @@
       updateCart();
     }
 
+    function updateQuantity(index, quantity) {
+      const q = parseInt(quantity);
+      if (q > 0) {
+        cart[index].quantity = q;
+        updateCart();
+      }
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+
+    function showCheckout() {
+      // Aggiorna totale nel checkout al momento dell'apertura del popup
+      document.getElementById("checkout-total").textContent =
+        cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
+      // Pulisce eventuali messaggi precedenti
+      document.getElementById("checkout-message").textContent = "";
+    }
+
+    // Gestione submit del form di checkout
     document.getElementById("checkout-form").addEventListener("submit", function (e) {
       e.preventDefault();
-      const message = document.getElementById("checkout-message");
-      message.innerHTML = '<div class="alert alert-success">Grazie per il tuo ordine! Riceverai una conferma a breve.</div>';
+      if (cart.length === 0) {
+        alert("Il carrello è vuoto!");
+        return;
+      }
+      // Simulazione di completamento ordine
       this.reset();
-      cart.length = 0;
+      cart = [];
       updateCart();
+      document.getElementById("checkout-message").textContent = "Ordine completato con successo! Grazie.";
     });
-
-    renderProducts(products);
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
