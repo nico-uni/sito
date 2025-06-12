@@ -1,41 +1,129 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Miniature Fantasy Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
+    /* Tema fantasy: sfondo pergamena e colori magici */
     body {
-      background-color: #f0f8ff;
+      background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
+      background-color: #f4efe3;
+      font-family: 'Garamond', serif;
+      color: #3b2f2f;
     }
+
+    /* Immagini miniature */
     .card img {
       height: 200px;
       object-fit: cover;
+      border: 2px solid #8b5c2c;
     }
+
+    /* Navbar fantasy */
     .navbar {
-      background-color: #6f42c1;
+      background-image: linear-gradient(to right, #4b2e83, #6f42c1);
+      border-bottom: 3px solid #c6a664;
     }
+
     .navbar-brand, .nav-link, .nav-link:focus, .nav-link:hover {
-      color: white;
+      color: #fff3d1;
+      font-weight: bold;
     }
+
+    .navbar-logo {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    /* Footer */
     footer {
-      background-color: #6f42c1;
-      color: white;
+      background-color: #4b2e83;
+      color: #fdf6e3;
       padding: 1rem;
       text-align: center;
+      font-style: italic;
+    }
+
+    /* Ombra alle card */
+    .card {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      background-color: #fffaf0;
+      border: 2px solid #c6a664;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    /* Bordo titolo sezione */
+    h2 {
+      border-top: 4px double #8b5c2c;
+      padding-top: 10px;
+      text-shadow: 1px 1px #f4f1eb;
+    }
+
+    /* Pulsanti personalizzati */
+    .btn-primary {
+      background-color: #6f42c1;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #563d7c;
+    }
+
+    .btn-danger {
+      background-color: #b03a2e;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #922b21;
+    }
+
+    .btn-success {
+      background-color: #2e8b57;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #276749;
+    }
+
+    .btn-warning {
+      background-color: #d19a33;
+      border: none;
+      color: #3b2f2f;
+      font-weight: bold;
+    }
+
+    .btn-warning:hover {
+      background-color: #b37f26;
+      color: #fff3d1;
     }
   </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg">
-    <div class="container">
+    <div class="container d-flex align-items-center">
+      <img src="https://cdn.pixabay.com/photo/2014/04/02/14/10/shield-307214_960_720.png" alt="Logo Fantasy" class="navbar-logo" />
       <a class="navbar-brand" href="#">Miniature Fantasy</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item"><a class="nav-link" href="#products">Miniature</a></li>
           <li class="nav-item"><a class="nav-link" href="#cart">Carrello</a></li>
           <li class="nav-item"><a class="nav-link" href="#checkout">Checkout</a></li>
+          <button type="button" class="btn btn-warning ms-3" data-bs-toggle="modal" data-bs-target="#cartModal">
+            Vai al carrello
+          </button>
         </ul>
       </div>
     </div>
@@ -44,133 +132,167 @@
   <div class="container mt-5" id="products">
     <h2 class="text-center mb-4">Miniature in Vendita</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-      <!-- Miniatura 1 -->
+      <!-- Card 1 -->
       <div class="col">
-        <div class="card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Fantasy_Miniature.jpg/640px-Fantasy_Miniature.jpg" class="card-img-top" alt="Miniatura Guerriero">
+        <div class="card h-100">
+          <img src="https://raw.githubusercontent.com/username/repository/main/img/elf-wizard.jpg" alt="Elfo Mago" class="card-img-top" />
           <div class="card-body">
-            <h5 class="card-title">Guerriero del Nord</h5>
-            <p class="card-text">Una potente miniatura in armatura pesante, perfetta per battaglie epiche.</p>
-            <button class="btn btn-primary add-to-cart" data-name="Guerriero del Nord" data-price="12">Aggiungi al Carrello</button>
+            <h5 class="card-title">Elfo Mago</h5>
+            <p class="card-text">Un potente mago elfico con bastone incantato e mantello fluente.</p>
+            <button class="btn btn-primary add-to-cart" data-name="Elfo Mago" data-price="24.90">Aggiungi al carrello</button>
           </div>
         </div>
       </div>
-      <!-- Miniatura 2 -->
+      <!-- Card 2 -->
       <div class="col">
-        <div class="card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Miniature_Wizard.jpg/640px-Miniature_Wizard.jpg" class="card-img-top" alt="Miniatura Mago">
+        <div class="card h-100">
+          <img src="https://raw.githubusercontent.com/username/repository/main/img/dragon-rider.jpg" alt="Cavaliere del Drago" class="card-img-top" />
           <div class="card-body">
-            <h5 class="card-title">Mago Arcano</h5>
-            <p class="card-text">Una figura mistica con dettagli incantati, ideale per incantatori.</p>
-            <button class="btn btn-primary add-to-cart" data-name="Mago Arcano" data-price="15">Aggiungi al Carrello</button>
+            <h5 class="card-title">Cavaliere del Drago</h5>
+            <p class="card-text">Un guerriero coraggioso in armatura, cavalcando un drago fiammeggiante.</p>
+            <button class="btn btn-primary add-to-cart" data-name="Cavaliere del Drago" data-price="45.50">Aggiungi al carrello</button>
           </div>
         </div>
       </div>
-      <!-- Miniatura 3 -->
+      <!-- Card 3 -->
       <div class="col">
-        <div class="card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Miniature_Ranger.jpg" class="card-img-top" alt="Miniatura Ranger">
+        <div class="card h-100">
+          <img src="https://raw.githubusercontent.com/username/repository/main/img/dark-elf.jpg" alt="Elfo Oscuro" class="card-img-top" />
           <div class="card-body">
-            <h5 class="card-title">Ranger delle Terre Selvagge</h5>
-            <p class="card-text">Agile e furtivo, perfetto per missioni furtive e strategiche.</p>
-            <button class="btn btn-primary add-to-cart" data-name="Ranger delle Terre Selvagge" data-price="14">Aggiungi al Carrello</button>
+            <h5 class="card-title">Elfo Oscuro</h5>
+            <p class="card-text">Un elfo misterioso con arco e abilità stealth eccezionali.</p>
+            <button class="btn btn-primary add-to-cart" data-name="Elfo Oscuro" data-price="22.00">Aggiungi al carrello</button>
           </div>
         </div>
       </div>
-      <!-- Miniatura 4 -->
+      <!-- Card 4 -->
       <div class="col">
-        <div class="card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/Fantasy_miniature_dwarf.jpg" class="card-img-top" alt="Nano Combattente">
+        <div class="card h-100">
+          <img src="https://raw.githubusercontent.com/username/repository/main/img/orc-warrior.jpg" alt="Guerriero Orco" class="card-img-top" />
           <div class="card-body">
-            <h5 class="card-title">Nano Combattente</h5>
-            <p class="card-text">Robusto e determinato, pronto a difendere il suo clan con l'ascia.</p>
-            <button class="btn btn-primary add-to-cart" data-name="Nano Combattente" data-price="13">Aggiungi al Carrello</button>
+            <h5 class="card-title">Guerriero Orco</h5>
+            <p class="card-text">Un orco forte con ascia doppia, pronto alla battaglia.</p>
+            <button class="btn btn-primary add-to-cart" data-name="Guerriero Orco" data-price="18.75">Aggiungi al carrello</button>
           </div>
         </div>
       </div>
-      <!-- Miniatura 5 -->
+      <!-- Card 5 -->
       <div class="col">
-        <div class="card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Fantasy_miniature_elf.jpg" class="card-img-top" alt="Elfo delle Foreste">
+        <div class="card h-100">
+          <img src="https://raw.githubusercontent.com/username/repository/main/img/fairy-archer.jpg" alt="Fata Arciera" class="card-img-top" />
           <div class="card-body">
-            <h5 class="card-title">Elfo delle Foreste</h5>
-            <p class="card-text">Elegante e letale, armato con arco lungo e magie naturali.</p>
-            <button class="btn btn-primary add-to-cart" data-name="Elfo delle Foreste" data-price="16">Aggiungi al Carrello</button>
+            <h5 class="card-title">Fata Arciera</h5>
+            <p class="card-text">Una delicata fata con arco magico e ali luminose.</p>
+            <button class="btn btn-primary add-to-cart" data-name="Fata Arciera" data-price="26.30">Aggiungi al carrello</button>
           </div>
         </div>
       </div>
-      <!-- Miniatura 6 -->
+      <!-- Card 6 -->
       <div class="col">
-        <div class="card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Fantasy_miniature_dragon.jpg" class="card-img-top" alt="Drago Rosso">
+        <div class="card h-100">
+          <img src="https://raw.githubusercontent.com/username/repository/main/img/stone-golem.jpg" alt="Golem di Pietra" class="card-img-top" />
           <div class="card-body">
-            <h5 class="card-title">Drago Rosso</h5>
-            <p class="card-text">Una creatura epica per battaglie leggendarie, ricca di dettagli.</p>
-            <button class="btn btn-primary add-to-cart" data-name="Drago Rosso" data-price="30">Aggiungi al Carrello</button>
+            <h5 class="card-title">Golem di Pietra</h5>
+            <p class="card-text">Una gigantesca creatura di pietra che protegge i segreti antichi.</p>
+            <button class="btn btn-primary add-to-cart" data-name="Golem di Pietra" data-price="55.00">Aggiungi al carrello</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container mt-5" id="cart">
-    <h2>Carrello</h2>
-    <ul class="list-group mb-3" id="cart-items"></ul>
-    <h4>Totale: €<span id="cart-total">0</span></h4>
+  <!-- Modal Carrello -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-warning">
+          <h5 class="modal-title" id="cartModalLabel">Carrello</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+        </div>
+        <div class="modal-body" id="cartItems">
+          <p>Il carrello è vuoto.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="clearCart" class="btn btn-danger me-auto">Svuota Carrello</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continua Shopping</button>
+          <button type="button" id="checkoutBtn" class="btn btn-success">Procedi al Checkout</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="container mt-4" id="checkout">
-    <h2>Checkout</h2>
-    <form>
-      <div class="mb-3">
-        <label class="form-label">Nome</label>
-        <input type="text" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Indirizzo</label>
-        <input type="text" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Carta di Credito</label>
-        <input type="text" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-success">Completa Ordine</button>
-    </form>
-  </div>
+  <footer>
+    &copy; 2025 Miniature Fantasy Shop - Tutti i diritti riservati
+  </footer>
 
-  <footer class="mt-5">Miniature Fantasy © 2025 - Tutti i diritti riservati</footer>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const cart = [];
+
+    function updateCartModal() {
+      const cartItemsDiv = document.getElementById('cartItems');
+      if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<p>Il carrello è vuoto.</p>';
+        return;
+      }
+
+      let html = '<ul class="list-group">';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+          ${item.name} - €${item.price.toFixed(2)}
+          <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">&times;</button>
+        </li>`;
+      });
+
+      html += `</ul><h5 class="mt-3">Totale: €${total.toFixed(2)}</h5>`;
+      cartItemsDiv.innerHTML = html;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartModal();
+    }
+
+    function clearCart() {
+      cart.length = 0;
+      updateCartModal();
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCartModal();
+      // Apri il modal quando si aggiunge un prodotto
+      const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+      cartModal.show();
+    }
 
     document.querySelectorAll('.add-to-cart').forEach(button => {
       button.addEventListener('click', () => {
         const name = button.getAttribute('data-name');
         const price = parseFloat(button.getAttribute('data-price'));
-        cart.push({ name, price });
-        updateCart();
+        addToCart(name, price);
       });
     });
 
-    function updateCart() {
-      const cartItems = document.getElementById('cart-items');
-      cartItems.innerHTML = '';
-      let total = 0;
-      cart.forEach((item, index) => {
-        total += item.price;
-        const li = document.createElement('li');
-        li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-        li.innerHTML = `${item.name} - €${item.price} <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Rimuovi</button>`;
-        cartItems.appendChild(li);
-      });
-      document.getElementById('cart-total').textContent = total.toFixed(2);
-    }
+    document.getElementById('clearCart').addEventListener('click', () => {
+      clearCart();
+    });
 
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      updateCart();
-    }
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Il carrello è vuoto, aggiungi almeno un prodotto.');
+        return;
+      }
+      alert('Procedi con il checkout!');
+      // Qui puoi aggiungere la logica per il checkout vero e proprio
+      clearCart();
+      const cartModalEl = document.getElementById('cartModal');
+      const modalInstance = bootstrap.Modal.getInstance(cartModalEl);
+      modalInstance.hide();
+    });
   </script>
-
 </body>
 </html>
