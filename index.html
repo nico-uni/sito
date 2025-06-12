@@ -97,10 +97,22 @@
     <div class="container d-flex align-items-center">
       <img src="https://cdn.pixabay.com/photo/2014/04/02/14/10/shield-307214_960_720.png" alt="Logo Fantasy" class="navbar-logo" />
       <a class="navbar-brand" href="#">Miniature Fantasy</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" href="#products">Miniature</a></li>
           <li class="nav-item"><a class="nav-link" href="#cart">Carrello</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#checkoutModal">Vai al Checkout</a></li>
         </ul>
       </div>
     </div>
@@ -124,17 +136,27 @@
   <div class="container mt-5" id="cart">
     <h2>Carrello</h2>
     <ul class="list-group mb-3" id="cart-items"></ul>
-    <h4>Totale: €<span id="cart-total">0</span></h4>
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#checkoutModal" id="goToCheckoutBtn" disabled>Vai al Checkout</button>
+    <h4>Totale: €<span id="cart-total">0.00</span></h4>
   </div>
 
   <!-- Modal Checkout -->
-  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="checkoutModal"
+    tabindex="-1"
+    aria-labelledby="checkoutModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-warning">
           <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Chiudi"
+          ></button>
         </div>
         <div class="modal-body">
           <form id="checkout-form">
@@ -151,12 +173,17 @@
               <input type="text" class="form-control" required />
             </div>
             <div class="form-check mb-3">
-              <input class="form-check-input" type="checkbox" id="accettaTermini" required />
-              <label class="form-check-label" for="accettaTermini">
-                Accetto i <a href="#">termini e condizioni</a>
-              </label>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="accettaTermini"
+                required
+              />
+              <label class="form-check-label" for="accettaTermini"
+                >Accetto i <a href="#">termini e condizioni</a></label
+              >
             </div>
-            <button type="submit" class="btn btn-success">Completa Ordine</button>
+            <button type="submit" class="btn btn-success w-100">Completa Ordine</button>
           </form>
           <div id="checkout-message"></div>
         </div>
@@ -164,146 +191,192 @@
     </div>
   </div>
 
+  <footer class="mt-5">
+    Miniature Fantasy © 2025 - Tutti i diritti riservati
+  </footer>
+
   <div id="modals-container"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const cart = [];
 
     const products = [
-      { name: "Cleric Valorosa", price: 13, img: "https://titan-forge.com/clerics/516-human-female-cleric.jpg", description: "Paladina devota alla dea della guarigione, brandisce un martello di luce sacra e scudo incantato. Ideale per ruoli da supporto e combattente resistente." },
-      { name: "Druido del Bosco", price: 14, img: "https://titan-forge.com/druids/642-human-male-druid.jpg", description: "Misterioso guardiano della foresta, controlla le forze naturali. Può evocare creature selvatiche, curare, e manipolare il terreno." },
-      { name: "Strega delle Ombre", price: 12, img: "https://brother-vinni.com/cdn/shop/files/witch-miniature-fantasy-miniature-for-dnd-d-d-and-other-tabletop-rpg.jpg", description: "Incantatrice sinistra proveniente dalle Terre Oscure, esperta in illusioni, maledizioni e necromanzia leggera." },
-      { name: "Nano del Martello", price: 11, img: "https://titan-forge.com/dwarves/1017-dwarf-hammer-warrior.jpg", description: "Guerriero corazzato con lunga barba intrecciata, usa un martello da guerra runico. Ottimo per assalti frontali e difesa." },
-      { name: "Arciere Elfico", price: 10, img: "https://cdn.pixabay.com/photo/2020/04/28/12/46/elf-5101802_960_720.jpg", description: "Agile cecchino dei boschi, maestro dell'arco elfico. Ottimo per attacchi furtivi, imboscate e supporto a distanza." },
-      { name: "Cavaliere del Sole", price: 15, img: "https://cdn.pixabay.com/photo/2020/04/29/17/59/knight-5110976_960_720.jpg", description: "Nobile guerriero con armatura splendente, emana aura sacra. Incanta gli alleati e abbatte il male con spada solare." }
+      {
+        name: "Cleric Valorosa",
+        price: 13,
+        img: "https://titan-forge.com/clerics/516-human-female-cleric.jpg",
+        description:
+          "Paladina devota alla dea della guarigione, brandisce un martello di luce sacra e scudo incantato. Ideale per ruoli da supporto e combattente resistente.",
+      },
+      {
+        name: "Druido del Bosco",
+        price: 14,
+        img: "https://titan-forge.com/druids/642-human-male-druid.jpg",
+        description:
+          "Misterioso guardiano della foresta, controlla le forze naturali. Può evocare creature selvatiche, curare, e manipolare il terreno.",
+      },
+      {
+        name: "Strega delle Ombre",
+        price: 12,
+        img: "https://brother-vinni.com/cdn/shop/files/witch-miniature-fantasy-miniature-for-dnd-d-d-and-other-tabletop-rpg.jpg",
+        description:
+          "Incantatrice sinistra proveniente dalle Terre Oscure, esperta in illusioni, maledizioni e necromanzia leggera.",
+      },
+      {
+        name: "Nano del Martello",
+        price: 11,
+        img: "https://titan-forge.com/dwarves/1017-dwarf-hammer-warrior.jpg",
+        description:
+          "Guerriero corazzato con lunga barba intrecciata, usa un martello da guerra runico. Perfetto per attacchi frontali e difesa.",
+      },
+      {
+        name: "Elfo Arcere",
+        price: 13,
+        img: "https://titan-forge.com/elves/182-elf-archer.jpg",
+        description:
+          "Abile tiratore scelto con arco lungo, rapido e silenzioso, capace di colpire da grandi distanze con precisione letale.",
+      },
+      {
+        name: "Paladino Sacro",
+        price: 15,
+        img: "https://titan-forge.com/paladins/223-holy-paladin.jpg",
+        description:
+          "Cavaliere della luce, protettore del bene e dell’ordine, dotato di armatura scintillante e spada sacra.",
+      },
     ];
 
-    const container = document.getElementById("miniature-cards");
-    const modalContainer = document.getElementById("modals-container");
-    const goToCheckoutBtn = document.getElementById("goToCheckoutBtn");
+    const cardsContainer = document.getElementById("miniature-cards");
+    const cartItemsContainer = document.getElementById("cart-items");
+    const cartTotalElement = document.getElementById("cart-total");
+    const checkoutForm = document.getElementById("checkout-form");
+    const checkoutMessage = document.getElementById("checkout-message");
 
-    document.getElementById("sortSelect").addEventListener("change", function () {
-      const sortType = this.value;
-      let sortedProducts = [...products];
-
-      switch (sortType) {
-        case "priceAsc": sortedProducts.sort((a, b) => a.price - b.price); break;
-        case "priceDesc": sortedProducts.sort((a, b) => b.price - a.price); break;
-        case "nameAsc": sortedProducts.sort((a, b) => a.name.localeCompare(b.name)); break;
-        case "nameDesc": sortedProducts.sort((a, b) => b.name.localeCompare(a.name)); break;
-      }
-
-      renderProducts(sortedProducts);
-    });
-
-    function renderProducts(productList) {
-      container.innerHTML = '';
-      modalContainer.innerHTML = '';
-      productList.forEach((product, index) => {
-        const col = document.createElement("div");
-        col.className = "col";
-        col.innerHTML = `
+    // Mostra sempre tutte le miniature
+    function renderProducts(list) {
+      cardsContainer.innerHTML = "";
+      list.forEach((product, index) => {
+        const card = document.createElement("div");
+        card.classList.add("col");
+        card.innerHTML = `
           <div class="card h-100">
             <img src="${product.img}" class="card-img-top" alt="${product.name}" />
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">${product.name}</h5>
-              <p class="card-text">${product.description.substring(0, 60)}...</p>
-              <p class="card-text fw-bold">€${product.price}</p>
-              <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#modal${index}">Vedi dettagli</button>
-            </div>
-          </div>
-        `;
-        container.appendChild(col);
-
-        // Modal dettagli prodotto
-        const modalDiv = document.createElement("div");
-        modalDiv.className = "modal fade";
-        modalDiv.id = `modal${index}`;
-        modalDiv.tabIndex = -1;
-        modalDiv.setAttribute("aria-labelledby", `modalLabel${index}`);
-        modalDiv.setAttribute("aria-hidden", "true");
-        modalDiv.innerHTML = `
-          <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="modalLabel${index}">${product.name}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
-              </div>
-              <div class="modal-body d-flex flex-column flex-md-row">
-                <img src="${product.img}" alt="${product.name}" class="img-fluid rounded mb-3 mb-md-0 me-md-3" style="max-width: 300px;">
-                <div>
-                  <p>${product.description}</p>
-                  <p class="fw-bold fs-5">Prezzo: €${product.price}</p>
-                  <button class="btn btn-success" onclick="addToCart(${index})" data-bs-dismiss="modal">Aggiungi al Carrello</button>
-                </div>
+              <p class="card-text flex-grow-1">${product.description}</p>
+              <div>
+                <p class="card-text fw-bold">€${product.price.toFixed(2)}</p>
+                <button class="btn btn-primary w-100 add-to-cart" data-index="${index}">Aggiungi al carrello</button>
               </div>
             </div>
           </div>
         `;
-        modalContainer.appendChild(modalDiv);
+        cardsContainer.appendChild(card);
       });
     }
 
-    function addToCart(index) {
-      const product = products[index];
-      cart.push(product);
-      updateCart();
+    // Ordina la lista in base alla selezione
+    function sortProducts(criteria) {
+      let sorted = [...products];
+      switch (criteria) {
+        case "priceAsc":
+          sorted.sort((a, b) => a.price - b.price);
+          break;
+        case "priceDesc":
+          sorted.sort((a, b) => b.price - a.price);
+          break;
+        case "nameAsc":
+          sorted.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case "nameDesc":
+          sorted.sort((a, b) => b.name.localeCompare(a.name));
+          break;
+      }
+      renderProducts(sorted);
     }
 
+    // Aggiorna il carrello (lista + totale)
     function updateCart() {
-      const cartItems = document.getElementById("cart-items");
-      cartItems.innerHTML = "";
-      let total = 0;
-
+      cartItemsContainer.innerHTML = "";
       if (cart.length === 0) {
-        cartItems.innerHTML = '<li class="list-group-item">Il carrello è vuoto.</li>';
-        goToCheckoutBtn.disabled = true;
-      } else {
-        cart.forEach((item, i) => {
-          total += item.price;
-          const li = document.createElement("li");
-          li.className = "list-group-item d-flex justify-content-between align-items-center";
-          li.innerHTML = `
-            ${item.name} - €${item.price}
-            <button class="btn btn-danger btn-sm" onclick="removeFromCart(${i})">&times;</button>
-          `;
-          cartItems.appendChild(li);
-        });
-        goToCheckoutBtn.disabled = false;
+        cartItemsContainer.innerHTML = `<li class="list-group-item">Il carrello è vuoto.</li>`;
+        cartTotalElement.textContent = "0.00";
+        return;
       }
 
-      document.getElementById("cart-total").textContent = total.toFixed(2);
+      let total = 0;
+      cart.forEach((item, idx) => {
+        total += item.price;
+        const li = document.createElement("li");
+        li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+        li.innerHTML = `
+          ${item.name}
+          <div>
+            <span class="me-3 fw-bold">€${item.price.toFixed(2)}</span>
+            <button class="btn btn-sm btn-danger remove-item" data-index="${idx}">Rimuovi</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(li);
+      });
+      cartTotalElement.textContent = total.toFixed(2);
+
+      // Aggiungo event listener ai pulsanti rimuovi
+      const removeButtons = document.querySelectorAll(".remove-item");
+      removeButtons.forEach(button =>
+        button.addEventListener("click", (e) => {
+          const i = parseInt(e.target.dataset.index);
+          if (!isNaN(i)) {
+            cart.splice(i, 1);
+            updateCart();
+          }
+        })
+      );
     }
 
-    function removeFromCart(i) {
-      cart.splice(i, 1);
-      updateCart();
-    }
+    // Aggiungi prodotto al carrello
+    cardsContainer.addEventListener("click", (e) => {
+      if (e.target.classList.contains("add-to-cart")) {
+        const idx = parseInt(e.target.dataset.index);
+        if (!isNaN(idx)) {
+          cart.push(products[idx]);
+          updateCart();
+        }
+      }
+    });
 
-    // Gestione form checkout
-    const checkoutForm = document.getElementById("checkout-form");
-    const checkoutMessage = document.getElementById("checkout-message");
-    const checkoutModalEl = document.getElementById("checkoutModal");
-    const bootstrapModal = bootstrap.Modal.getOrCreateInstance(checkoutModalEl);
+    // Gestione ordinamento
+    document.getElementById("sortSelect").addEventListener("change", (e) => {
+      sortProducts(e.target.value);
+    });
+
+    // Inizializza con la lista predefinita senza ordinamento
+    renderProducts(products);
+
+    // Gestione checkout
+    const bootstrapModal = new bootstrap.Modal(document.getElementById("checkoutModal"));
 
     checkoutForm.addEventListener("submit", function (e) {
       e.preventDefault();
+      checkoutMessage.innerHTML = "";
+
       if (cart.length === 0) {
         checkoutMessage.innerHTML = `<div class="alert alert-danger">Il carrello è vuoto.</div>`;
         return;
       }
+
+      if (!checkoutForm.checkValidity()) {
+        checkoutMessage.innerHTML = `<div class="alert alert-danger">Compila tutti i campi richiesti e accetta i termini.</div>`;
+        return;
+      }
+
       checkoutMessage.innerHTML = `<div class="alert alert-success">Ordine completato con successo! Grazie per il tuo acquisto.</div>`;
       cart.length = 0;
       updateCart();
       checkoutForm.reset();
-      setTimeout(() => bootstrapModal.hide(), 2500);
+
+      // Chiudi subito il popup del checkout
+      bootstrapModal.hide();
     });
-
-    // Inizializzazione prodotti e carrello
-    renderProducts(products);
-    updateCart();
   </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
